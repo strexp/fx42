@@ -1,0 +1,16 @@
+{
+  "name": "@fx42/clients",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@fx42/application": "workspace:*",
+    "@fx42/shared": "workspace:*",
+    "ofetch": "1.5.1",
+    "openid-client": "6.8.8",
+    "zod": "4.6.7"
+  }
+}

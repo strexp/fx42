@@ -1,0 +1,44 @@
+{
+  "name": "fx42",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.26.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @fx42/web dev",
+    "dev:mock": "FX42_MODE=mock DATABASE_PATH=${DATABASE_PATH:-./data/fx42.dev.db} FX42_CONFIG_FILE=./config/fx42.mock.yaml FX42_CONTROL_SOCKET=${FX42_CONTROL_SOCKET:-./data/control.sock} FX42_OIDC_MOCK_SECRET=mock FX42_OIDC_MOCK_ALT_SECRET=mock FX42_OIDC_MOCK_GENERIC_SECRET=mock pnpm --filter @fx42/web dev",
+    "build": "pnpm --filter @fx42/web build && rm -rf .output && cp -r apps/web/.output .output && node scripts/copy-signalr-deps.mjs",
+    "preview": "pnpm --filter @fx42/web preview",
+    "db:migrate": "tsx packages/db/src/migrate-cli.ts",
+    "db:seed": "FX42_MODE=mock tsx packages/db/src/seed-cli.ts",
+    "db:schema": "node scripts/generate-schema.mjs",
+    "db:backup": "tsx packages/db/src/backup-cli.ts",
+    "db:check": "tsx packages/db/src/check-cli.ts",
+    "ops": "tsx apps/cli/src/index.ts",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "typecheck": "tsc -p tsconfig.check.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:integration": "vitest run --config vitest.integration.config.ts",
+    "test:arch": "depcruise --config .dependency-cruiser.cjs packages apps",
+    "test:contracts": "vitest run packages/contracts",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.64.1",
+    "@types/better-sqlite3": "7.6.13",
+    "@types/node": "24.10.1",
+    "dependency-cruiser": "17.3.1",
+    "eslint": "10.13.0",
+    "prettier": "3.9.10",
+    "prettier-plugin-tailwindcss": "0.8.1",
+    "tsx": "4.21.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.72.1",
+    "vitest": "5.0.5"
+  }
+}

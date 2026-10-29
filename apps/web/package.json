@@ -1,0 +1,42 @@
+{
+  "name": "@fx42/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "typecheck": "nuxt typecheck"
+  },
+  "dependencies": {
+    "@fx42/application": "workspace:*",
+    "@fx42/clients": "workspace:*",
+    "@fx42/contracts": "workspace:*",
+    "@fx42/db": "workspace:*",
+    "@fx42/domain": "workspace:*",
+    "@fx42/runtime": "workspace:*",
+    "@fx42/shared": "workspace:*",
+    "@iconify-json/lucide": "1.2.148",
+    "@number-flow/vue": "0.5.2",
+    "@nuxt/icon": "2.6.2",
+    "@nuxt/ui": "4.12.0",
+    "@nuxtjs/i18n": "10.6.0",
+    "@vueuse/core": "15.0.0",
+    "lightweight-charts": "5.2.1",
+    "nuxt": "4.6.3",
+    "nuxt-auth-utils": "0.5.34",
+    "nuxt-security": "2.7.0",
+    "vue": "3.5.44",
+    "vue-router": "4.6.3",
+    "zod": "4.6.7",
+    "@nuxtjs/color-mode": "4.1.0",
+    "tailwindcss": "4.3.3"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "1.17.0",
+    "@types/better-sqlite3": "7.6.13",
+    "vue-tsc": "3.3.13"
+  }
+}

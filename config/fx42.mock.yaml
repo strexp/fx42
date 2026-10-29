@@ -1,0 +1,164 @@
+# Mock-mode configuration for local development and E2E tests.
+# OIDC providers are simulated by the app (no external identity provider needed).
+
+ftkUsdRate: "0.01"
+leverageTiers: [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000]
+
+fees:
+  takerBps: 1
+  minOpenFee: "0.1"
+  spreadMarkupBps: 0
+  depositBps: 0
+  withdrawFixed: "0.1"
+  withdrawBps: 10
+
+risk:
+  maintenanceMarginByLeverage:
+    1: 1000
+    2: 200
+    5: 200
+    10: 100
+    20: 100
+    50: 100
+    100: 50
+    200: 30
+    500: 10
+    1000: 5
+  gapBufferBps: 2
+  liquidationFeeBps: 100
+  minOrderNotional: "100"
+  maxOrderNotional: "20000000"
+  maxUserNotional: "100000000"
+  maxPositionsPerUser: 20
+  maxSlippageBps: 50
+  staleQuoteMs: 30000
+  haltQuoteMs: 15000
+  priceJumpBps: 500
+  staleClosePolicy: confirm
+  maxStaleCloseFeedGapMs: 60000
+  cooldownAfterLiquidationSec: 60
+  autoCloseRatioMin: "1.05"
+  autoCloseRatioMax: "5.00"
+  marketClosedPolicy: close-only
+
+funding:
+  memoExpiryMinutes: 1440
+  minDeposit: "0.01"
+  maxDeposit: "1000000"
+  maxDepositPerDay: "5000000"
+  minWithdraw: "0.01"
+  maxWithdraw: "1000000"
+  maxWithdrawPerDay: "5000000"
+  maxPendingDeposits: 5
+
+retention:
+  candles1mDays: 90
+  candles1hDays: 730
+  notificationsDays: 180
+
+instruments:
+  - symbol: EURUSD
+    enabled: true
+    description: Euro vs US Dollar
+    contractSize: "100000"
+    pipSize: "0.0001"
+    pricePrecision: 5
+    minLots: "0.01"
+    lotStep: "0.01"
+    maxLots: "100"
+    maxNetExposureUsd: "1000000"
+  - symbol: GBPUSD
+    enabled: true
+    description: British Pound vs US Dollar
+    contractSize: "100000"
+    pipSize: "0.0001"
+    pricePrecision: 5
+    minLots: "0.01"
+    lotStep: "0.01"
+    maxLots: "100"
+    maxNetExposureUsd: "1000000"
+  # base=USD instruments: pipSize is the venue's native pip (USD/XXX).
+  # The engine converts it to the normalized XXX/USD space as pipSize × P².
+  - symbol: USDJPY
+    enabled: true
+    description: Japanese Yen vs US Dollar
+    contractSize: "100000"
+    pipSize: "0.01"
+    pricePrecision: 8
+    minLots: "0.01"
+    lotStep: "0.01"
+    maxLots: "100"
+    maxNetExposureUsd: "1000000"
+  - symbol: AUDUSD
+    enabled: true
+    description: Australian Dollar vs US Dollar
+    contractSize: "100000"
+    pipSize: "0.0001"
+    pricePrecision: 5
+    minLots: "0.01"
+    lotStep: "0.01"
+    maxLots: "100"
+    maxNetExposureUsd: "1000000"
+  - symbol: XAUUSD
+    enabled: true
+    description: Gold vs US Dollar
+    contractSize: "100"
+    pipSize: "0.01"
+    pricePrecision: 2
+    minLots: "0.01"
+    lotStep: "0.01"
+    maxLots: "100"
+    maxNetExposureUsd: "500000"
+
+weekend:
+  # Keep mock/E2E trading deterministic on any day; production config keeps
+  # weekend margin rules enabled.
+  enabled: false
+  startBeforeCloseMinutes: 180
+  reduceBeforeCloseMinutes: 30
+  maxLeverage: 50
+  action: margin-call-then-reduce
+  reopenGraceMinutes: 5
+
+financing:
+  enabled: true
+  annualRateBps: 500
+  basis: notional
+  settlementUtc: "00:00"
+
+virtual:
+  maxDeposit: "10000000"
+  maxDailyDeposit: "50000000"
+
+chart:
+  mas: [5, 10, 20, 60]
+
+auth:
+  providers:
+    - id: mock-dn42
+      kind: dn42
+      displayName: "Mock DN42 (Alice)"
+      issuer: "http://localhost:3000/mock-oidc"
+      clientId: "fx42-mock"
+      clientSecretEnv: FX42_OIDC_MOCK_SECRET
+      scopes: [openid, profile, email, dn42]
+      mntClaim: active_mnt
+      enabled: true
+    - id: mock-dn42-alt
+      kind: dn42
+      displayName: "Mock DN42 Alt (Alice, AS2)"
+      issuer: "http://localhost:3000/mock-oidc-alt"
+      clientId: "fx42-mock-alt"
+      clientSecretEnv: FX42_OIDC_MOCK_ALT_SECRET
+      scopes: [openid, profile, email, dn42]
+      mntClaim: active_mnt
+      enabled: true
+    - id: mock-generic
+      kind: generic
+      displayName: "Mock Generic OIDC"
+      issuer: "http://localhost:3000/mock-oidc-generic"
+      clientId: "fx42-mock-generic"
+      clientSecretEnv: FX42_OIDC_MOCK_GENERIC_SECRET
+      scopes: [openid, profile, email]
+      enabled: true
+

@@ -1,0 +1,244 @@
+ftkUsdRate: "0.01"
+leverageTiers: [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000]
+
+fees:
+  takerBps: 1
+  minOpenFee: "1"
+  spreadMarkupBps: 0
+  depositBps: 0
+  withdrawFixed: "0.1"
+  withdrawBps: 10
+
+risk:
+  maintenanceMarginByLeverage:
+    1: 1000
+    2: 200
+    5: 200
+    10: 100
+    20: 100
+    50: 100
+    100: 50
+    200: 30
+    500: 10
+    1000: 5
+  gapBufferBps: 2
+  liquidationFeeBps: 100
+  minOrderNotional: "100"
+  maxOrderNotional: "20000000"
+  maxUserNotional: "100000000"
+  maxPositionsPerUser: 20
+  maxSlippageBps: 50
+  staleQuoteMs: 30000
+  haltQuoteMs: 15000
+  priceJumpBps: 500
+  staleClosePolicy: confirm
+  maxStaleCloseFeedGapMs: 60000
+  cooldownAfterLiquidationSec: 60
+  autoCloseRatioMin: "1.05"
+  autoCloseRatioMax: "5.00"
+  marketClosedPolicy: close-only
+
+funding:
+  memoExpiryMinutes: 1440
+  minDeposit: "0.01"
+  maxDeposit: "1000000"
+  maxDepositPerDay: "5000000"
+  minWithdraw: "0.01"
+  maxWithdraw: "1000000"
+  maxWithdrawPerDay: "5000000"
+  maxPendingDeposits: 5
+
+retention:
+  candles1mDays: 90
+  candles1hDays: 730
+  notificationsDays: 180
+
+instruments:
+  - symbol: EURUSD
+    enabled: true
+    description: Euro vs US Dollar
+    contractSize: "1000"
+    pipSize: "0.0001"
+    pricePrecision: 5
+    minLots: "0.01"
+    lotStep: "0.01"
+    maxLots: "100"
+    maxNetExposureUsd: "1000000"
+  - symbol: GBPUSD
+    enabled: true
+    description: British Pound vs US Dollar
+    contractSize: "1000"
+    pipSize: "0.0001"
+    pricePrecision: 5
+    minLots: "0.01"
+    lotStep: "0.01"
+    maxLots: "100"
+    maxNetExposureUsd: "1000000"
+  # base=USD instruments: pipSize is the venue's native pip (USD/XXX).
+  # The engine converts it to the normalized XXX/USD space as pipSize × P².
+  - symbol: USDJPY
+    enabled: true
+    description: Japanese Yen vs US Dollar
+    contractSize: "1000"
+    pipSize: "0.01"
+    pricePrecision: 8
+    minLots: "0.01"
+    lotStep: "0.01"
+    maxLots: "100"
+    maxNetExposureUsd: "1000000"
+  - symbol: AUDUSD
+    enabled: true
+    description: Australian Dollar vs US Dollar
+    contractSize: "1000"
+    pipSize: "0.0001"
+    pricePrecision: 5
+    minLots: "0.01"
+    lotStep: "0.01"
+    maxLots: "100"
+    maxNetExposureUsd: "1000000"
+  - symbol: NZDUSD
+    enabled: true
+    description: New Zealand Dollar vs US Dollar
+    contractSize: "1000"
+    pipSize: "0.0001"
+    pricePrecision: 5
+    minLots: "0.01"
+    lotStep: "0.01"
+    maxLots: "100"
+    maxNetExposureUsd: "1000000"
+  - symbol: USDCAD
+    enabled: true
+    description: Canadian Dollar vs US Dollar
+    contractSize: "1000"
+    pipSize: "0.0001"
+    pricePrecision: 8
+    minLots: "0.01"
+    lotStep: "0.01"
+    maxLots: "100"
+    maxNetExposureUsd: "1000000"
+  - symbol: USDCHF
+    enabled: true
+    description: Swiss Franc vs US Dollar
+    contractSize: "1000"
+    pipSize: "0.0001"
+    pricePrecision: 8
+    minLots: "0.01"
+    lotStep: "0.01"
+    maxLots: "100"
+    maxNetExposureUsd: "1000000"
+  - symbol: USDCNH
+    enabled: true
+    description: Offshore Chinese Renminbi vs US Dollar
+    contractSize: "1000"
+    pipSize: "0.0001"
+    pricePrecision: 8
+    minLots: "0.01"
+    lotStep: "0.01"
+    maxLots: "100"
+    maxNetExposureUsd: "1000000"
+  - symbol: USDSGD
+    enabled: true
+    description: Singapore Dollar vs US Dollar
+    contractSize: "1000"
+    pipSize: "0.0001"
+    pricePrecision: 8
+    minLots: "0.01"
+    lotStep: "0.01"
+    maxLots: "100"
+    maxNetExposureUsd: "1000000"
+  - symbol: XAUUSD
+    enabled: true
+    description: Gold vs US Dollar
+    contractSize: "100"
+    pipSize: "0.01"
+    pricePrecision: 2
+    minLots: "0.01"
+    lotStep: "0.01"
+    maxLots: "100"
+    maxNetExposureUsd: "500000"
+
+weekend:
+  enabled: true
+  startBeforeCloseMinutes: 180
+  reduceBeforeCloseMinutes: 30
+  maxLeverage: 50
+  action: margin-call-then-reduce
+  reopenGraceMinutes: 5
+
+financing:
+  enabled: true
+  annualRateBps: 500
+  basis: notional
+  settlementUtc: "00:00"
+
+virtual:
+  maxDeposit: "10000000"
+  maxDailyDeposit: "50000000"
+
+chart:
+  mas: [5, 10, 20, 60]
+
+auth:
+  providers:
+    - id: oauth-dn42
+      kind: dn42
+      displayName: "oauth.dn42"
+      issuer: "https://oauth.dn42"
+      clientId: "30839988d0ab93366d8f9cdfa6c0a281"
+      clientSecretEnv: FX42_OIDC_OAUTH_DN42_CLIENT_SECRET
+      scopes: [openid, profile, dn42]
+      mntClaim: active_mnt
+      enabled: true
+    - id: auth-iedon-net
+      kind: dn42
+      displayName: "auth.iedon.net"
+      issuer: "https://auth.iedon.net"
+      clientId: "30839988d0ab93366d8f9cdfa6c0a281"
+      clientSecretEnv: FX42_OIDC_OAUTH_DN42_CLIENT_SECRET
+      scopes: [openid, profile, dn42]
+      mntClaim: active_mnt
+      enabled: true
+    - id: auth-dn42
+      kind: dn42
+      displayName: "auth.dn42"
+      issuer: "https://auth.dn42"
+      clientId: "b4d3a0d0-b323-458c-89dd-516f8efd3c72"
+      clientSecretEnv: FX42_OIDC_AUTH_DN42_CLIENT_SECRET
+      scopes: [openid, profile, dn42]
+      mntClaim: dn42.effective_mnt
+      enabled: true
+    - id: dn42-gload-eu
+      kind: dn42
+      displayName: "dn42.g-load.eu"
+      issuer: "https://dn42.g-load.eu"
+      clientId: "b4d3a0d0-b323-458c-89dd-516f8efd3c72"
+      clientSecretEnv: FX42_OIDC_AUTH_DN42_CLIENT_SECRET
+      scopes: [openid, profile, dn42]
+      mntClaim: dn42.effective_mnt
+      enabled: true
+    - id: auth-hexp-dn42
+      kind: dn42
+      displayName: "auth.hexp.dn42"
+      issuer: "https://auth.hexp.dn42"
+      clientId: "sZZuiIrQ01D52tLW"
+      clientSecretEnv: FX42_OIDC_HEXP_DN42_CLIENT_SECRET
+      scopes: [openid, profile, dn42]
+      mntClaim: dn42.active_mnt
+      enabled: true
+    - id: auth42-hexpnet-work
+      kind: dn42
+      displayName: "auth42.hexpnet.work"
+      issuer: "https://auth42.hexpnet.work"
+      clientId: "sZZuiIrQ01D52tLW"
+      clientSecretEnv: FX42_OIDC_HEXP_DN42_CLIENT_SECRET
+      scopes: [openid, profile, dn42]
+      mntClaim: dn42.active_mnt
+      enabled: true
+    - id: gitlab-dn42
+      kind: generic
+      displayName: "gitlab.dn42"
+      issuer: "https://gitlab.dn42"
+      clientId: "21de50153e7e0b84fcb928b29db50da75e4c68231666ede97175eef611f8cdb4"
+      clientSecretEnv: FX42_OIDC_GITLAB_DN42_CLIENT_SECRET
+      scopes: [openid, profile]
+      enabled: true

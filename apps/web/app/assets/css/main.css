@@ -1,0 +1,27 @@
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
+:root {
+  --fx42-up: #22c55e;
+  --fx42-down: #ef4444;
+}
+
+html,
+body,
+#__nuxt {
+  min-height: 100%;
+}
+
+body {
+  @apply bg-default text-highlighted antialiased;
+}
+
+.fx-up {
+  color: var(--fx42-up);
+}
+.fx-down {
+  color: var(--fx42-down);
+}
+.tabular {
+  font-variant-numeric: tabular-nums;
+}

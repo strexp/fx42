@@ -1,0 +1,10 @@
+dbs:
+  - path: /data/fx42.db
+    replicas:
+      - type: file
+        path: /backup/fx42
+      # Uncomment and configure an off-site replica in production.
+      # - type: s3
+      #   bucket: fx42-backup
+      #   path: sqlite/fx42
+      #   region: us-east-1

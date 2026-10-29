@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  NUXT_SESSION_PASSWORD: fx42-ci-session-password-at-least-32-characters
+  FX42_ENCRYPTION_KEY: MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=
+  FX42_MODE: mock
+  FX42_CONFIG_FILE: ./config/fx42.mock.yaml
+  DATABASE_PATH: ./data/e2e.db
+
+jobs:
+  check:
+    name: Lint, typecheck, tests and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.26.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck packages
+        run: pnpm typecheck
+
+      - name: Typecheck web
+        run: pnpm --filter @fx42/web typecheck
+
+      - name: Contracts tests
+        run: pnpm test:contracts
+
+      - name: Unit and integration tests
+        run: pnpm test
+
+      - name: Architecture boundaries
+        run: pnpm test:arch
+
+      - name: Build
+        run: pnpm build
+
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: E2E tests (mock)
+        run: pnpm test:e2e
+
+      - name: Check ledger reconciliation
+        run: pnpm db:check

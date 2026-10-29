@@ -1,0 +1,24 @@
+{
+  "name": "@fx42/runtime",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@fx42/application": "workspace:*",
+    "@fx42/clients": "workspace:*",
+    "@fx42/contracts": "workspace:*",
+    "@fx42/db": "workspace:*",
+    "@fx42/domain": "workspace:*",
+    "@fx42/shared": "workspace:*",
+    "@microsoft/signalr": "10.0.11",
+    "decimal.js": "10.6.0",
+    "node-cron": "4.6.0",
+    "pino": "10.4.0",
+    "prom-client": "15.1.3",
+    "trading-signals": "8.3.0",
+    "ws": "7.5.13"
+  }
+}

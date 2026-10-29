@@ -1,0 +1,15 @@
+{
+  "name": "@fx42/application",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": {
+    "@fx42/config": "workspace:*",
+    "@fx42/contracts": "workspace:*",
+    "@fx42/db": "workspace:*",
+    "@fx42/domain": "workspace:*",
+    "@fx42/shared": "workspace:*",
+    "decimal.js": "10.6.0"
+  }
+}

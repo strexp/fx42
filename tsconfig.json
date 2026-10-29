@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noUncheckedIndexedAccess": false,
+    "exactOptionalPropertyTypes": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": false,
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@fx42/shared": ["packages/shared/src/index.ts"],
+      "@fx42/contracts": ["packages/contracts/src/index.ts"],
+      "@fx42/domain": ["packages/domain/src/index.ts"],
+      "@fx42/config": ["packages/config/src/index.ts"],
+      "@fx42/db": ["packages/db/src/index.ts"],
+      "@fx42/clients": ["packages/clients/src/index.ts"],
+      "@fx42/application": ["packages/application/src/index.ts"],
+      "@fx42/runtime": ["packages/runtime/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "**/.nuxt", "**/.output", "**/dist", "apps/web"]
+}
